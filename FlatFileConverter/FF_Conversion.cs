@@ -9,14 +9,14 @@ namespace FlatFileConverter
 {
     public class FF_Conversion
     {
-
-        public static DataTable ConvertFlatFile(string[] DocInfo, string EOL, char delimiter)
+        //convert to datatable
+        public static DataTable ConvertFlatFileToDataTable(string DocInfo, char EOL, char delimiter, bool firstLineIsHeader)
         {
             DataTable dtReturn = new DataTable();
 
             try
             {
-                ConvertToDataTable.convertToDataTable(DocInfo, EOL, delimiter);
+                dtReturn = ConvertToDataTable.convertToDataTable(DocInfo, EOL, delimiter, firstLineIsHeader);
             }
             catch (ConvertException ex)
             {
@@ -25,6 +25,24 @@ namespace FlatFileConverter
             }
 
             return dtReturn;
+        }
+
+        //convert to json string
+        public static string ConvertFlatFileToJson(string DocInfo, char EOL, char delimiter, bool firstLineIsHeader)
+        {
+            string strReturn = string.Empty;
+
+            try
+            {
+                strReturn = ConverToJson.convertToJson(DocInfo, EOL, delimiter, firstLineIsHeader);
+            }
+            catch (ConvertException ex)
+            {
+                //return error
+                throw ex;
+            }
+
+            return strReturn;
         }
     }
 }

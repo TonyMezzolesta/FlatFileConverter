@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FlatFileConverter
 {
-    internal static class ConvertToDataTable
+    internal class ConverToJson
     {
-        internal static DataTable convertToDataTable(string contents, char EOL, char segmentDiv, bool firstLineIsHeader)
+        internal static string convertToJson(string contents, char EOL, char segmentDiv, bool firstLineIsHeader)
         {
-            DataTable dt = new DataTable();
+            dynamic dt = new JObject();
+            string returnString = string.Empty;
 
             try
             {
@@ -58,13 +62,32 @@ namespace FlatFileConverter
                         dt.Rows.Add(dr);
                     }
                 }
+
+                ////loop through the data and turn it into an object
+                //List<dynamic> expandoList = new List<dynamic>();
+
+                //foreach (DataRow row in dt.Rows)
+                //{
+                //    //create a new ExpandoObject() at each row
+                //    var expandoDict = new ExpandoObject() as IDictionary<String, Object>;
+                //    foreach (DataColumn col in dt.Columns)
+                //    {
+                //        //put every column of this row into the new dictionary
+                //        expandoDict.Add(col.ToString(), row[col.ColumnName].ToString());
+                //    }
+
+                //    //add this "row" to the list
+                //    expandoList.Add(expandoDict);
+                //}
+
+                returnString = JsonConvert.SerializeObject(dt, Formatting.Indented);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return dt;
+            return returnString;
         }
 
         private static DataTable CreateDataTable(DataTable dt, string[] contentSplit, char segmentDiv)
@@ -127,5 +150,6 @@ namespace FlatFileConverter
 
             return dt;
         }
+
     }
 }
