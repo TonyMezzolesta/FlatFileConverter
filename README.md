@@ -25,7 +25,7 @@ Great for using EDI (X12/EDIFACT/CODECO) and translating into DataTable/Json/obj
 ### Properties
 
 | Property | Type| Description |
-| --- | --- |
+| --- | --- | --- |
 | fileContent | string | File content into string format from file |
 | EOL | string | End Of Line character |
 | delimiter | char | Segment separator |
