@@ -1,21 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace FlatFileConverter
 {
-    internal class ConverToJson
+    internal class ConvertToObject
     {
-        internal static string convertToJson(string contents, char EOL, char segmentDiv, bool firstLineIsHeader)
+        internal static dynamic convertToObject(string contents, char EOL, char segmentDiv, bool firstLineIsHeader)
         {
             DataTable dt = new DataTable();
-            string returnString = string.Empty;
+            dynamic returnObject = new JObject();
 
             try
             {
@@ -63,31 +63,17 @@ namespace FlatFileConverter
                     }
                 }
 
-                ////loop through the data and turn it into an object
-                //List<dynamic> expandoList = new List<dynamic>();
+                //create json string
+                string returnString = JsonConvert.SerializeObject(dt, Formatting.Indented);
 
-                //foreach (DataRow row in dt.Rows)
-                //{
-                //    //create a new ExpandoObject() at each row
-                //    var expandoDict = new ExpandoObject() as IDictionary<String, Object>;
-                //    foreach (DataColumn col in dt.Columns)
-                //    {
-                //        //put every column of this row into the new dictionary
-                //        expandoDict.Add(col.ToString(), row[col.ColumnName].ToString());
-                //    }
-
-                //    //add this "row" to the list
-                //    expandoList.Add(expandoDict);
-                //}
-
-                returnString = JsonConvert.SerializeObject(dt, Formatting.Indented);
+                returnObject = JsonConvert.DeserializeObject<dynamic>(returnString);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
-            return returnString;
+            return returnObject;
         }
 
         private static DataTable CreateDataTable(DataTable dt, string[] contentSplit, char segmentDiv)

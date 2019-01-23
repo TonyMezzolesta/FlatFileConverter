@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="ConverToJson.cs" />
     <Compile Include="ConvertToDataTable.cs" />
+    <Compile Include="ConvertToObject.cs" />
     <Compile Include="Exception.cs" />
     <Compile Include="FF_Conversion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
