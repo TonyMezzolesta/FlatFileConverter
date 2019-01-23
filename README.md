@@ -57,7 +57,7 @@ string EOL = "~";
 char delimiter = '*';
 bool firstLineIsHeader = false;
 
-//convert to DataTable
+//convert to Json string
 string jsonStr = FF_Conversion.ConvertFlatFileToJson(fileContent, EOL, delimiter, firstLineIsHeader);
 ```
 
@@ -71,6 +71,6 @@ string EOL = "~";
 char delimiter = '*';
 bool firstLineIsHeader = false;
 
-//convert to DataTable
+//convert to dynamic object
 dynamic dynObj = FF_Conversion.convertToObject(fileContent, EOL, delimiter, firstLineIsHeader);
 ```
