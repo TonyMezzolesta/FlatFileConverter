@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FlatFileConverter
 {
-    internal class ConverToJson
+    internal class ConvertToJson
     {
         internal static string convertToJson(string contents, char EOL, char segmentDiv, bool firstLineIsHeader)
         {

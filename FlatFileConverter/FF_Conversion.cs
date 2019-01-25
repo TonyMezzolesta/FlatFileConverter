@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace FlatFileConverter
 
             try
             {
-                strReturn = ConverToJson.convertToJson(DocInfo, EOL, delimiter, firstLineIsHeader);
+                strReturn = ConvertToJson.convertToJson(DocInfo, EOL, delimiter, firstLineIsHeader);
             }
             catch (ConvertException ex)
             {
@@ -43,6 +44,24 @@ namespace FlatFileConverter
             }
 
             return strReturn;
+        }
+
+        //convert to json string
+        public static dynamic ConvertFlatFileToObject(string DocInfo, char EOL, char delimiter, bool firstLineIsHeader)
+        {
+            dynamic returnObj = new JObject();
+
+            try
+            {
+                returnObj = ConvertToObject.convertToObject(DocInfo, EOL, delimiter, firstLineIsHeader);
+            }
+            catch (ConvertException ex)
+            {
+                //return error
+                throw ex;
+            }
+
+            return returnObj;
         }
     }
 }
